@@ -1,0 +1,45 @@
+---
+title: "Stack Explanation"
+author: "Carl Boneri"
+date: "Thursday, April 14, 2016"
+output:
+  html_document:
+    fig_caption: yes
+    fig_width: 12
+    highlight: tango
+    theme: united
+  pdf_document: default
+---
+
+>`fromJSON` creates a data frame is the json file is properly structured.
+
+
+```{r,fig.width=7,echo=TRUE,eval=TRUE}
+
+fromJSON('[{"label":"insert_photo","logo":"data:image/png;base64,iVBORw"}]')
+```
+
+>`readLines` instead manually reads the lines of a file and returns a string for
+>each line.
+
+
+```{r,echo=TRUE,eval=TRUE}
+a.t <- tempfile(fileext = ".json")
+a.json <- toJSON(pretty = T,
+                 fromJSON(
+                   '[{"label":"insert_photo","logo":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9"}]'
+                   )
+                 )
+write(a.json,a.t)
+readLines(a.t)
+```
+
+>`sprintf` is an RCPP function that works like `paste0`
+```{r}
+who.dat <- function(name_in = NULL) sprintf('my name is %s',name_in)
+
+these_names <- c('Carl','Billy','Slim Shady')
+
+lapply(these_names,who.dat)
+```
+
